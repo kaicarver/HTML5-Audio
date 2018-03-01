@@ -2,7 +2,7 @@
 <html>
 <head>
   <style>
-    textarea { width: 1000px; height: 180px; }
+    textarea { width: 1000px; height: 120px; }
     textarea#hanzi { height: 120px; }
   </style>
 </head>
@@ -32,15 +32,20 @@
   <p>Parsed pinyin:<br>
     <textarea id="parsed"></textarea>
   </p>
+  <p>Chinese characters:<br>
+    <textarea id="parsedhanzi"></textarea>
+  </p>
   <button onclick="parse()">Parse</button>
   <script>
     function parse() {
       var pinyin = document.getElementById('pinyin').value;
+      var hanzi = document.getElementById('hanzi').value;
       var notones = tr(pinyin,
 			'āáǎàēéěèīíǐìōóǒòūúǔù',
 			'aaaaeeeeiiiioooouuuu')
       document.getElementById('notones').value = notones;
       document.getElementById('parsed').value = splitpinyin(pinyin);
+      document.getElementById('parsedhanzi').value = splithanzi(hanzi);
     }
     function tr( text, search, replace ) {
       var regex = RegExp( '[' + search + ']', 'g' );
@@ -54,7 +59,7 @@
 			    } );
       return t;
     }
-    function splitpinyin(pinyin) {
+    function splitpinyin(text) {
       // this regex parses pinyin without tones
       // based on https://stackoverflow.com/questions/20736291/regex-for-matching-pinyin
       // note that it cannot be perfect based on pinyin alone, for ex. huàngè = huàn gè or huàng è? This picks the more unlikely huàngè every time
@@ -71,14 +76,33 @@
       var regex = new RegExp(re, 'g');
       var matches = [];
       var match;
-      while (match = regex.exec(pinyin)) {
+      while (match = regex.exec(text)) {
 	//console.log(match);
 	matches.push(match[0]);
+	// do we need this?
 	if (regex.lastIndex === match.index) {
 	  regex.lastIndex++;
 	}
       }
-      return matches.join('-');
+      return matches.length + ' ' + matches.join(' ');
+    }
+    function splithanzi(text) {
+      // this regex parses out Chinese characters
+      // based on https://stackoverflow.com/a/21113538/153144
+      var re = '/[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]/';
+      var regex = new RegExp(re, 'g');
+      console.log(re);
+      var matches = [];
+      var match;
+      while (match = regex.exec(text)) {
+	//console.log(match);
+	matches.push(match[0]);
+	// do we need this?
+	if (regex.lastIndex === match.index) {
+	  regex.lastIndex++;
+	}
+      }
+      return matches.length + ' ' + matches.join(' ');
     }
   </script>
 </body>

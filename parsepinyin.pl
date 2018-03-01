@@ -81,10 +81,10 @@ bing	ping	ming	 	ding	ting	ning	ling	 	 	 	 	 	 	 	 	 	 	jing	qing	xing	ying
  	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	jun 	qun 	xun 	yun 
 /;
 
-say $re;
+#say $re;
 
-say scalar @syllables, " legal pinyin syllables";
-say join '|', @syllables;
+#say scalar @syllables, " legal pinyin syllables";
+#say join '|', @syllables;
 
 use Regexp::Assemble;
 
@@ -94,6 +94,77 @@ say $ra->re;
 my $ree = $ra->re;
 
 @words = [];
+$pinyin = lc $pinyin;
+push @words, $1 while $pinyin =~ /($ree)/gim;
+say "hi";
+say join ' ', @words;
 
-push @words, $1 while $pinyin =~ /($ree)/gi;
+@words = [];
+$pinyin = <<END;
+guānzìzài púsà<br>
+xíng shēn bōrěbōluómìduō shí<br>
+zhàojiàn wǔyùn jiē kōng<br>
+dù yīqiè kǔ è<br>
+shèlìzi<br>
+sè bùyì kōng<br>
+kōng bùyì sè<br>
+sè jíshì kōng<br>
+kōng jíshì sè<br>
+shòu xiǎng xíng shí yìfù rúshì<br>
+shèlìzi<br>
+shì zhū fǎ kōng xiāng<br>
+bùshēng bùmiè<br>
+bùgòu bùjìng<br>
+bùzēng bùjiǎn<br>
+shì gù kōngzhōng wúsè<br>
+wú shòu xiǎng xíng shí<br>
+wú yǎn ěr bí shé shēn yì<br>
+wú sè shēng xiāng wèi chù fǎ<br>
+wú yǎnjiè nǎizhì wúyìshí jiè<br>
+wú wúmíng yì wú wúmíng jǐn<br>
+nǎizhì wú lǎosǐ yì wú lǎosǐ jǐn<br>
+wú kǔ jí miè dào<br>
+wú zhì yì wú dé<br>
+yǐ wú suǒ dé gù<br>
+pútísàduǒ yī bōrě bōluómìduō<br>
+gù xīn wú guà ài<br>
+wú guà ài gù<br>
+wú yǒu kǒngbù<br>
+yuǎnlí diāndǎo mèngxiǎng<br>
+jiùjìng nièpán<br>
+sānshì zhū fú<br>
+yī bōrě bōluómìduō gù<br>
+dé ānòuduōluó sānmiǎo sānpútí<br>
+gù zhī bōrě bōluómìduō<br>
+shì dàshén zhòu<br>
+shì dàmíng zhòu<br>
+shì wú shàng zhòu<br>
+shì wú děng děng zhòu<br>
+néng chú yīqiè kǔ<br>
+zhēnshí bù xū<br>
+gù shuō bōrě bōluómìduō zhòu<br>
+jí shuō zhòu yuē:<br>
+jiēdì jiēdì bōluójiēdì bōluósēngjiēdì<br>
+pútí sàpóhē
+END
+
+my $char;
+while ($pinyin =~ /([āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ])/gmi) {
+    $char = $1;
+    #say "<$'>";
+    my $nl = '';
+    #say "xx ", substr($', 0, 5);
+    $nl = "***\n" if ($' =~ /^.?<br>/);
+    
+    $char = 1 if ($char =~ /[āēīōūǖ]/);
+    $char = 2 if ($char =~ /[áéíóúǘ]/);
+    $char = 3 if ($char =~ /[ǎěǐǒǔǚ]/);
+    $char = 4 if ($char =~ /[àèìòùǜ]/);
+    print "$char $nl";
+}
+say "";
+
+$pinyin =~ tr/āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ/aaaaeeeeiiiioooouuuuüüüü/;
+push @words, $1 while $pinyin =~ /($ree)/gim;
+say "hi";
 say join ' ', @words;
