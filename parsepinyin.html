@@ -27,6 +27,8 @@
 5, Hòulái lǎobǎn fāxiàn jiǎotàbǎn yě huàile, liàntiáo yě sōngle, suǒyǐ jiànyì wǒ mǎi bù xīn chē, tā shuō xiànzài de biànsùchē qíqǐlái yòu kuài yòu qīngsōng. 
 6, Wǒ dāngrán zhīdào biànsùchē hǎo, kěshì zhège yuè méi qián mǎi. Suǒyǐ bàituō lǎobǎn xiān bāng wǒ bǎ jiù chē xiūlǐ xiūlǐ, děng xià gè yuè zàishuō ba!</textarea>
   </p>
+  <button onclick="parse()">Parse Pinyin</button>
+  <button onclick="doclear()">Clear</button>
   <p>Pinyin without tones:<br>
     <textarea id="notones"></textarea>
   </p>
@@ -36,7 +38,6 @@
   <p>Chinese characters:<br>
     <textarea id="parsedhanzi"></textarea>
   </p>
-  <button onclick="parse()">Parse</button>
   <script>
     function parse() {
       var hanzi = document.getElementById('hanzi').value;
@@ -46,7 +47,12 @@
 			'aaaaeeeeiiiioooouuuu')
       document.getElementById('notones').value = notones;
       document.getElementById('parsed').value = splitpinyin(pinyin);
-      document.getElementById('parsedhanzi').value = splithanzi(hanzi);
+      //document.getElementById('parsedhanzi').value = splithanzi(hanzi);
+    }
+    function doclear() {
+      document.getElementById('notones').value = '';
+      document.getElementById('parsed').value = '';
+      //document.getElementById('parsedhanzi').value = '';
     }
     function tr( text, search, replace ) {
       var regex = RegExp( '[' + search + ']', 'g' );
@@ -60,6 +66,7 @@
 			    } );
       return t;
     }
+    // not used
     function splithanzi(hanzi) {
       // Chinese Character regex https://stackoverflow.com/questions/21109011/javascript-unicode-string-chinese-character-but-no-punctuation
       var regex = RegExp('[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]', 'g');
@@ -91,7 +98,7 @@
       var regex = new RegExp(re, 'g');
       var matches = [];
       var match;
-      while (match = regex.exec(text)) {
+      while (match = regex.exec(pinyin)) {
 	//console.log(match);
 	matches.push(match[0]);
 	// do we need this?
@@ -101,7 +108,8 @@
       }
       return matches.length + ' ' + matches.join(' ');
     }
-    function splithanzi(text) {
+    // even less used
+    function splithanzi2(text) {
       // this regex parses out Chinese characters
       // based on https://stackoverflow.com/a/21113538/153144
       var re = '/[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]/';
