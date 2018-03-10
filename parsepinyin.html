@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <title>Process Chinese tones</title>
   <style>
-    textarea { width: 1000px; height: 60px; }
+    textarea { width: 100%; height: 60px; }
     textarea#hanzi { height: 60px; }
   </style>
 </head>
@@ -28,32 +28,36 @@
 5, Hòulái lǎobǎn fāxiàn jiǎotàbǎn yě huàile, liàntiáo yě sōngle, suǒyǐ jiànyì wǒ mǎi bù xīn chē, tā shuō xiànzài de biànsùchē qíqǐlái yòu kuài yòu qīngsōng. 
 6, Wǒ dāngrán zhīdào biànsùchē hǎo, kěshì zhège yuè méi qián mǎi. Suǒyǐ bàituō lǎobǎn xiān bāng wǒ bǎ jiù chē xiūlǐ xiūlǐ, děng xià gè yuè zàishuō ba!</textarea>
   </p>
-  <button onclick="parse()">Parse pinyin</button>
+  <button onclick="parsePinyin()">Parse pinyin</button>
+  <button onclick="parseHanzi()">Parse Chinese characters</button>
   <button onclick="doclear()">Clear</button>
   <p>Parsed pinyin without tones:<br>
     <textarea id="notones"></textarea>
   </p>
   <p>Parsed pinyin in isolated syllables matching the characters:<br>
-    <textarea id="parsed"></textarea>
+    <textarea id="parsedpinyin"></textarea>
   </p>
-  <p>Chinese characters:<br>
+  <p>Parsed Chinese characters:<br>
     <textarea id="parsedhanzi"></textarea>
   </p>
   <script>
-    function parse() {
-      var hanzi = document.getElementById('hanzi').value;
+    function parsePinyin() {
       var pinyin = document.getElementById('pinyin').value;
       var notones = tr(pinyin,
 			'āáǎàēéěèīíǐìōóǒòūúǔù',
 			'aaaaeeeeiiiioooouuuu')
       document.getElementById('notones').value = notones;
-      document.getElementById('parsed').value = splitpinyin(pinyin);
-      //document.getElementById('parsedhanzi').value = splithanzi(hanzi);
+      document.getElementById('parsedpinyin').value = splitpinyin(pinyin);
+    }
+    function parseHanzi() {
+      var hanzi = document.getElementById('hanzi').value;
+      document.getElementById('parsedhanzi').value = splithanzi(hanzi);
+      //document.getElementById('parsedhanzi').value = '[not yet implemented]';
     }
     function doclear() {
       document.getElementById('notones').value = '';
-      document.getElementById('parsed').value = '';
-      //document.getElementById('parsedhanzi').value = '';
+      document.getElementById('parsedpinyin').value = '';
+      document.getElementById('parsedhanzi').value = '';
     }
     function tr( text, search, replace ) {
       var regex = RegExp( '[' + search + ']', 'g' );
@@ -67,7 +71,6 @@
 			    } );
       return t;
     }
-    // not used
     function splithanzi(hanzi) {
       // Chinese Character regex https://stackoverflow.com/questions/21109011/javascript-unicode-string-chinese-character-but-no-punctuation
       var regex = RegExp('[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]', 'g');
@@ -87,7 +90,7 @@
       // based on https://stackoverflow.com/questions/20736291/regex-for-matching-pinyin
       // note that it cannot be perfect based on pinyin alone, for ex. huàngè = huàn gè or huàng è? This picks the more unlikely huàngè every time
       var re = '(([mM]iu|[pmPM]ou|[bpmBPM](o|e(i|ng?)?|a(ng?|i|o)?|i(e|ng?|a(o|n))?|u))|([fF](ou?|(a|e)(ng?|i)?|u))|([dD](e(i|ng?)|i(a(o|n)?|u))|[dtDT](a(i|ng?|o)?|e(i|ng)?|i(a(o|n)?|e|ng|u)?|o(ng?|u)|u(o|i|an?|n)?))|([nN]eng?|[lnLN](a(i|ng?|o)?|e(i|ng)?|i(ang|a(o|n)?|e|ng?|u)?|o(ng?|u)|u(o|i|an?|n)?|üe?))|([ghkGHK](a(i|ng?|o)?|e(i|ng?)?|o(u|ng)|u(a(i|ng?)?|i|n|o)?))|([zZ]h?ei|[czCZ]h?(e(ng?)?|o(ng?|u)?|ao|u?a(i|ng?)?|u?(o|i|n)?))|([sS]ong|[sS]hua(i|ng?)?|[sS]hei|[sS][h]?(a(i|ng?|o)?|en?g?|ou|u(a?n|o|i)?|i))|([rR]((a|e)ng?|i|e|ao|ou|ong|u(o|i|n)|ua?n?))|([jqxJQX](i(a(o|ng?)?|e|u|ong|ng?)?|u(e|a?n)?))|(((a|A)(i|o|ng?)?|(o|O)u?|(e|E)(i|ng?|r)?))|([wW](a(i|ng?)?|o|e(i|ng?)?|u))|[yY](a(o|ng?)?|e|in?g?|o(u|ng)?|u(e|a?n)?))';
-      console.log(re);
+      //console.log(re);
       // this makes the regex handle tones
       // note this hack allows forbidden combinations, but it may be good enough
       re = re.replace(/a/g,'[aāáǎà]');
@@ -95,7 +98,7 @@
       re = re.replace(/i/g,'[iīíǐì]');
       re = re.replace(/o/g,'[oōóǒò]');
       re = re.replace(/u/g,'[uūúǔù]');
-      console.log(re);
+      //console.log(re);
       var regex = new RegExp(re, 'g');
       var matches = [];
       var match;
