@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8"/>
   <style>
     textarea { width: 1000px; height: 120px; }
     textarea#hanzi { height: 120px; }
@@ -9,7 +10,7 @@
 <body>
   <p>Add tone marks to characters.</p>
   <p>Chinese text using Chinese characters:<br>
-    <textarea id="hanzi">０、我知道騎腳踏車是一種很好的運動，週末假日，常常跟太太騎腳踏車到郊外去。
+    <textarea id="hanzi" lang="zh-Hant">０、我知道騎腳踏車是一種很好的運動，週末假日，常常跟太太騎腳踏車到郊外去。
 １、我的腳踏車是朋友送給我的，雖然看起來很舊，可是騎起來還不錯。
 ２、今天腳踏車有點怪怪的，不知道怎麼搞的，我一騎上去，車子就往旁邊歪。上車一看，原來後台沒氣了，只好把車推倒車行去，借個打氣筒打打氣。
 ３、老闆說我的車打氣沒用，因為車胎破了個小洞，爆胎了。怎麼又爆胎了？我上個禮拜才補過的。
@@ -38,8 +39,8 @@
   <button onclick="parse()">Parse</button>
   <script>
     function parse() {
-      var pinyin = document.getElementById('pinyin').value;
       var hanzi = document.getElementById('hanzi').value;
+      var pinyin = document.getElementById('pinyin').value;
       var notones = tr(pinyin,
 			'āáǎàēéěèīíǐìōóǒòūúǔù',
 			'aaaaeeeeiiiioooouuuu')
@@ -59,7 +60,21 @@
 			    } );
       return t;
     }
-    function splitpinyin(text) {
+    function splithanzi(hanzi) {
+      // Chinese Character regex https://stackoverflow.com/questions/21109011/javascript-unicode-string-chinese-character-but-no-punctuation
+      var regex = RegExp('[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]', 'g');
+      var matches = [];
+      var match;
+      while (match = regex.exec(hanzi)) {
+	//console.log(match);
+	matches.push(match[0]);
+	if (regex.lastIndex === match.index) {
+	  regex.lastIndex++;
+	}
+      }
+      return matches.length + ' ' + matches.join(' ');
+    }
+    function splitpinyin(pinyin) {
       // this regex parses pinyin without tones
       // based on https://stackoverflow.com/questions/20736291/regex-for-matching-pinyin
       // note that it cannot be perfect based on pinyin alone, for ex. huàngè = huàn gè or huàng è? This picks the more unlikely huàngè every time
