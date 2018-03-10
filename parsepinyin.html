@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
+  <title>Process Chinese tones</title>
   <style>
-    textarea { width: 1000px; height: 120px; }
-    textarea#hanzi { height: 120px; }
+    textarea { width: 1000px; height: 60px; }
+    textarea#hanzi { height: 60px; }
   </style>
 </head>
 <body>
-  <p>Add tone marks to characters.</p>
-  <p>Chinese text using Chinese characters:<br>
+  <p>Experimental... Process tones in Chinese characters and pinyin. Eventually as a way to add tone marks to characters.</p>
+  <p>For reference: Chinese text using Chinese characters:<br>
     <textarea id="hanzi" lang="zh-Hant">０、我知道騎腳踏車是一種很好的運動，週末假日，常常跟太太騎腳踏車到郊外去。
 １、我的腳踏車是朋友送給我的，雖然看起來很舊，可是騎起來還不錯。
 ２、今天腳踏車有點怪怪的，不知道怎麼搞的，我一騎上去，車子就往旁邊歪。上車一看，原來後台沒氣了，只好把車推倒車行去，借個打氣筒打打氣。
@@ -18,7 +19,7 @@
 ５、後來老闆發現腳踏板也壞了，鍊條也鬆了，所以建議我買部新車，他說現在的變速車騎起來又快又輕鬆。
 ６、我當然知道變速車好，可是這個月沒錢買。所以拜託老闆先幫我把舊車修理修理，等下個月再說吧！</textarea>
   </p>
-  <p>Same Chinese text, using pinyin (e.g. provided by <a href="https://translate.google.com/#zh-CN/en/%E4%BC%8D%E9%BA%A5%E4%BA%9E%E7%8E%8B">Google Translate</a>):<br>
+  <p>Same Chinese text, in pinyin, currently entered by hand (e.g. provided by <a href="https://translate.google.com/#zh-CN/en/%E4%BC%8D%E9%BA%A5%E4%BA%9E%E7%8E%8B">Google Translate</a>):<br>
     <textarea id="pinyin">0, Wǒ zhīdào qí jiǎotàchē shì yīzhǒng hěn hǎo de yùndòng, zhōumò jiàrì, chángcháng gēn tàitài qí jiǎotàchē dào jiāowài qù. 
 1, Wǒ de jiǎotàchē shì péngyǒu sòng gěi wǒ de, suīrán kànqǐlái hěn jiù, kěshì qíqǐlái hái bùcuò. 
 2, Jīntiān jiǎotàchē yǒudiǎn guài guài de, bù zhīdào zěnme gǎo de, wǒ yī qí shàngqù, chēzi jiù wǎng pángbiān wāi. Shàng chē yī kàn, yuánlái hòutái méi qìle, zhǐhǎo bǎ chē tuīdǎo chē xíng qù, jiè gè dǎqìtǒng dǎdǎqì. 
@@ -27,12 +28,12 @@
 5, Hòulái lǎobǎn fāxiàn jiǎotàbǎn yě huàile, liàntiáo yě sōngle, suǒyǐ jiànyì wǒ mǎi bù xīn chē, tā shuō xiànzài de biànsùchē qíqǐlái yòu kuài yòu qīngsōng. 
 6, Wǒ dāngrán zhīdào biànsùchē hǎo, kěshì zhège yuè méi qián mǎi. Suǒyǐ bàituō lǎobǎn xiān bāng wǒ bǎ jiù chē xiūlǐ xiūlǐ, děng xià gè yuè zàishuō ba!</textarea>
   </p>
-  <button onclick="parse()">Parse Pinyin</button>
+  <button onclick="parse()">Parse pinyin</button>
   <button onclick="doclear()">Clear</button>
-  <p>Pinyin without tones:<br>
+  <p>Parsed pinyin without tones:<br>
     <textarea id="notones"></textarea>
   </p>
-  <p>Parsed pinyin:<br>
+  <p>Parsed pinyin in isolated syllables matching the characters:<br>
     <textarea id="parsed"></textarea>
   </p>
   <p>Chinese characters:<br>
