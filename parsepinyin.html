@@ -4,8 +4,8 @@
   <meta charset="utf-8"/>
   <title>Process Chinese tones</title>
   <style>
-    textarea { width: 100%; height: 60px; }
-    textarea#hanzi { height: 60px; }
+    textarea { width: 100%; height: 40px; }
+    #hanzi2, #pinyin2 { display: none; }
   </style>
 </head>
 <body>
@@ -28,36 +28,142 @@
 5, Hòulái lǎobǎn fāxiàn jiǎotàbǎn yě huàile, liàntiáo yě sōngle, suǒyǐ jiànyì wǒ mǎi bù xīn chē, tā shuō xiànzài de biànsùchē qíqǐlái yòu kuài yòu qīngsōng. 
 6, Wǒ dāngrán zhīdào biànsùchē hǎo, kěshì zhège yuè méi qián mǎi. Suǒyǐ bàituō lǎobǎn xiān bāng wǒ bǎ jiù chē xiūlǐ xiūlǐ, děng xià gè yuè zàishuō ba!</textarea>
   </p>
+  <button onclick="parseAll()">Parse all</button>
   <button onclick="parsePinyin()">Parse pinyin</button>
+  <button onclick="parseTones()">Extract tones</button>
   <button onclick="parseHanzi()">Parse Chinese characters</button>
-  <button onclick="doclear()">Clear</button>
+  <button onclick="doclear()">Clear all outputs</button>
+  <button onclick="otherText()">Try with other text sample</button>
   <p>Parsed pinyin without tones:<br>
     <textarea id="notones"></textarea>
   </p>
   <p>Parsed pinyin in isolated syllables matching the characters:<br>
     <textarea id="parsedpinyin"></textarea>
   </p>
+  <p>Parsed pinyin to tones:<br>
+    <textarea id="parsedtones"></textarea>
+  </p>
   <p>Parsed Chinese characters:<br>
     <textarea id="parsedhanzi"></textarea>
   </p>
+  <textarea id="hanzi2" lang="zh-Hant">觀自在菩薩
+行深般若波羅密多時
+照見五蘊皆空
+度一切苦厄
+舍利子
+色不異空
+空不異色
+色即是空
+空即是色
+受想行識亦復如是
+舍利子
+是諸法空相
+不生不滅
+不垢不淨
+不增不減
+是故空中無色
+無受想行識
+無眼耳鼻舌身意
+無色聲香味觸法
+無眼界乃至無意識界
+無無明亦無無明盡
+乃至無老死亦無老死盡
+無苦集滅道
+無智亦無得
+以無所得故
+菩提薩埵依般若波羅密多故
+心無罣礙
+無罣礙故
+無有恐怖
+遠離顛倒夢想
+究竟涅槃
+三世諸佛
+依般若波羅密多故
+得阿耨多羅三藐三菩提
+故知般若波羅密多
+是大神咒
+是大明咒
+是無上咒
+是無等等咒
+能除一切苦
+真實不虛
+故說般若波羅密多咒
+即說咒曰:
+揭帝揭帝　般羅揭帝　般羅僧揭帝
+菩提薩婆訶</textarea>
+  <textarea id="pinyin2">guānzìzài púsà
+xíng shēn bōrěbōluómìduō shí
+zhàojiàn wǔyùn jiē kōng
+dù yīqiè kǔ è
+shèlìzi
+sè bùyì kōng
+kōng bùyì sè
+sè jíshì kōng
+kōng jíshì sè
+shòu xiǎng xíng shí yìfù rúshì
+shèlìzi
+shì zhū fǎ kōng xiāng
+bùshēng bùmiè
+bùgòu bùjìng
+bùzēng bùjiǎn
+shì gù kōngzhōng wúsè
+wú shòu xiǎng xíng shí
+wú yǎn ěr bí shé shēn yì
+wú sè shēng xiāng wèi chù fǎ
+wú yǎnjiè nǎizhì wúyìshí jiè
+wú wúmíng yì wú wúmíng jǐn
+nǎizhì wú lǎosǐ yì wú lǎosǐ jǐn
+wú kǔ jí miè dào
+wú zhì yì wú dé
+yǐ wú suǒ dé gù
+pútísàduǒ yī bōrě bōluómìduō
+gù xīn wú guà ài
+wú guà ài gù
+wú yǒu kǒngbù
+yuǎnlí diāndǎo mèngxiǎng
+jiùjìng nièpán
+sānshì zhū fú
+yī bōrě bōluómìduō gù
+dé ānòuduōluó sānmiǎo sānpútí
+gù zhī bōrě bōluómìduō
+shì dàshén zhòu
+shì dàmíng zhòu
+shì wú shàng zhòu
+shì wú děng děng zhòu
+néng chú yīqiè kǔ
+zhēnshí bù xū
+gù shuō bōrě bōluómìduō zhòu
+jí shuō zhòu yuē:
+jiēdì jiēdì bōluójiēdì bōluósēngjiēdì
+pútí sàpóhē
+</textarea>
   <script>
+    function parseAll() {
+      parsePinyin();
+      parseTones();
+      parseHanzi();
+    }
     function parsePinyin() {
       var pinyin = document.getElementById('pinyin').value;
       var notones = tr(pinyin,
 			'āáǎàēéěèīíǐìōóǒòūúǔù',
 			'aaaaeeeeiiiioooouuuu')
       document.getElementById('notones').value = notones;
-      document.getElementById('parsedpinyin').value = splitpinyin(pinyin);
+      document.getElementById('parsedpinyin').value = splitpinyin(pinyin, false);
+    }
+    function parseTones() {
+      var pinyin = document.getElementById('pinyin').value;      
+      document.getElementById('parsedtones').value = splitpinyin(pinyin, true);
     }
     function parseHanzi() {
       var hanzi = document.getElementById('hanzi').value;
       document.getElementById('parsedhanzi').value = splithanzi(hanzi);
-      //document.getElementById('parsedhanzi').value = '[not yet implemented]';
     }
     function doclear() {
       document.getElementById('notones').value = '';
       document.getElementById('parsedpinyin').value = '';
       document.getElementById('parsedhanzi').value = '';
+      document.getElementById('parsedtones').value = '';
     }
     function tr( text, search, replace ) {
       var regex = RegExp( '[' + search + ']', 'g' );
@@ -85,8 +191,9 @@
       }
       return matches.length + ' ' + matches.join(' ');
     }
-    function splitpinyin(pinyin) {
-      // this regex parses pinyin without tones
+    function splitpinyin(pinyin, justToneNumbers) {
+      // this regex parses pinyin and returns either pinyin without tones or a list of tones
+      // TODO: should prob. do both at same time...
       // based on https://stackoverflow.com/questions/20736291/regex-for-matching-pinyin
       // note that it cannot be perfect based on pinyin alone, for ex. huàngè = huàn gè or huàng è? This picks the more unlikely huàngè every time
       var re = '(([mM]iu|[pmPM]ou|[bpmBPM](o|e(i|ng?)?|a(ng?|i|o)?|i(e|ng?|a(o|n))?|u))|([fF](ou?|(a|e)(ng?|i)?|u))|([dD](e(i|ng?)|i(a(o|n)?|u))|[dtDT](a(i|ng?|o)?|e(i|ng)?|i(a(o|n)?|e|ng|u)?|o(ng?|u)|u(o|i|an?|n)?))|([nN]eng?|[lnLN](a(i|ng?|o)?|e(i|ng)?|i(ang|a(o|n)?|e|ng?|u)?|o(ng?|u)|u(o|i|an?|n)?|üe?))|([ghkGHK](a(i|ng?|o)?|e(i|ng?)?|o(u|ng)|u(a(i|ng?)?|i|n|o)?))|([zZ]h?ei|[czCZ]h?(e(ng?)?|o(ng?|u)?|ao|u?a(i|ng?)?|u?(o|i|n)?))|([sS]ong|[sS]hua(i|ng?)?|[sS]hei|[sS][h]?(a(i|ng?|o)?|en?g?|ou|u(a?n|o|i)?|i))|([rR]((a|e)ng?|i|e|ao|ou|ong|u(o|i|n)|ua?n?))|([jqxJQX](i(a(o|ng?)?|e|u|ong|ng?)?|u(e|a?n)?))|(((a|A)(i|o|ng?)?|(o|O)u?|(e|E)(i|ng?|r)?))|([wW](a(i|ng?)?|o|e(i|ng?)?|u))|[yY](a(o|ng?)?|e|in?g?|o(u|ng)?|u(e|a?n)?))';
@@ -101,10 +208,21 @@
       //console.log(re);
       var regex = new RegExp(re, 'g');
       var matches = [];
+      var tones = [];
       var match;
       while (match = regex.exec(pinyin)) {
-	//console.log(match);
-	matches.push(match[0]);
+	var syllable = match[0];
+	if (justToneNumbers) {
+	  console.log(syllable);
+	  var tone = 0;
+	  if      (syllable.match(/[āēīōūǖ]/)) { tone = 1; }
+	  else if (syllable.match(/[áéíóúǘ]/)) { tone = 2; }
+	  else if (syllable.match(/[ǎěǐǒǔǚ]/)) { tone = 3; }
+	  else if (syllable.match(/[àèìòùǜ]/)) { tone = 4; }
+	  matches.push(tone);
+	} else {
+	  matches.push(syllable);
+	}
 	// do we need this?
 	if (regex.lastIndex === match.index) {
 	  regex.lastIndex++;
@@ -112,8 +230,12 @@
       }
       return matches.length + ' ' + matches.join(' ');
     }
-    // even less used
-    function splithanzi2(text) {
+    function otherText() {
+      document.getElementById('hanzi').value = document.getElementById('hanzi2').value;
+      document.getElementById('pinyin').value = document.getElementById('pinyin2').value;
+    }
+    // not used...
+    function splithanzi2(hanzi) {
       // this regex parses out Chinese characters
       // based on https://stackoverflow.com/a/21113538/153144
       var re = '/[\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d]/';
@@ -121,7 +243,7 @@
       console.log(re);
       var matches = [];
       var match;
-      while (match = regex.exec(text)) {
+      while (match = regex.exec(hanzi)) {
 	//console.log(match);
 	matches.push(match[0]);
 	// do we need this?
