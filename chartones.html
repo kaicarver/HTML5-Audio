@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tone Marks Experiments</title>
     <style>
-      body { font-size: 2em; }
+      body { font-size: 1em; }
       .svgtones rt { background-color: yellow; 
 		     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' \><circle cx='5' cy='5' r='2' /></svg>")  no-repeat;
 		   }
@@ -11,25 +13,25 @@
 	  background-repeat: no-repeat;
 	  background-size: cover;
 	  background-position: center 0;
-	  background-color: yellow;
+	  xbackground-color: yellow;
 	  height: 125%;
       }
       .t0 {
-	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><circle cx='50' cy='50' r='1' style='stroke:red;stroke-width:5;stroke-linecap:round;fill:none'/></svg>");
+	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><circle cx='50' cy='50' r='1' style='stroke:red;stroke-width:20;stroke-linecap:round;fill:none'/></svg>");
       }      
       .t1 {
-	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='15' x2='85' y2='15' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>");
+	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='15' x2='85' y2='15' style='stroke:red;stroke-width:20;stroke-linecap:round'/></svg>");
       }
       .t2 {
-	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='85' x2='85' y2='15' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>");
+	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='85' x2='85' y2='15' style='stroke:red;stroke-width:20;stroke-linecap:round'/></svg>");
       }
       .t3 {
-	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><polyline points='15,50 50,85 85,50' style='stroke:red;stroke-width:5;stroke-linecap:round;fill:none'/></svg>");
+	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><polyline points='15,50 50,85 85,50' style='stroke:red;stroke-width:20;stroke-linecap:round;fill:none'/></svg>");
       }
       .t4 {
-	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='15' x2='85' y2='85' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>");
+	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='15' x2='85' y2='85' style='stroke:red;stroke-width:20;stroke-linecap:round'/></svg>");
       }
-      .toneabove, .toneabove .t0, .toneabove .t1, .toneabove .t2, .toneabove .t3, .toneabove .t4 { padding-top: 0.5em;  }
+      .toneabove, .toneabove .t0, .toneabove .t1, .toneabove .t2, .toneabove .t3, .toneabove .t4 { padding-top: 0.5em; line-height: 2em; }
       .toneabove .t0 {
 	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><circle cx='50' cy='50' r='1' style='stroke:blue;stroke-width:5;stroke-linecap:round;fill:none'/></svg>");
       }
@@ -45,11 +47,78 @@
       .toneabove .t4 {
 	  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='15' x2='85' y2='85' style='stroke:blue;stroke-width:5;stroke-linecap:round'/></svg>");
       }
-      .big { position:relative; float: left; height: 100px; width: 100px; border: 1px solid lightgray; }
+      .bigx { position:relative; float: left; height: 100px; width: 100px; border: 1px solid lightgray; }
+      .big { font-size: 5em; height: 100px; width: 100px; border: 1px solid lightgray; }
       img { border: 1px solid lightgray; }
     </style>
     <body>
-      <div class="digtones">
+      <p>This page has various attempts to display tones for Chinese characters. Zoom in with Ctrl-+ to see details.</p>
+      <p>Something similar could be used for pinyin, whose tone marks are always too small. If tones are important, then their visibility should be as high as the rest of the pinyin notation. Otherwise tones remain a second-class aspect.</p>
+      <p>This solution with tones in the character background using a span of a different class for each tone works ok:</p>
+      <div>媽麻馬罵嗎</div>
+      <div>
+	<span class="t1">媽</span><span class="t2">麻</span><span class="t3">馬</span><span class="t4">罵</span><span class="t0">嗎</span>
+      </div>
+      <div style="font-size:0.5em;">
+	<span class="t1">媽</span><span class="t2">麻</span><span class="t3">馬</span><span class="t4">罵</span><span class="t0">嗎</span>
+      </div>
+      <div style="font-size:12px;">
+	<span class="t1">媽</span><span class="t2">麻</span><span class="t3">馬</span><span class="t4">罵</span><span class="t0">嗎</span>
+      </div>
+      <div style="font-size:5em;">
+	<span class="t1">媽</span><span class="t2">麻</span><span class="t3">馬</span><span class="t4">罵</span><span class="t0">嗎</span>
+      </div>
+
+      <p>Tone above could look ok too (not yet fully done):</p>
+      <div class="toneabove">
+	<span class="t1">漢</span><span class="t2">漢</span><span class="t3">漢</span><span class="t4">漢</span><span class="t0">漢</span>
+      </div>
+      <div class="toneabove" style="font-size:0.5em;">
+	<span class="t1">漢</span><span class="t2">漢</span><span class="t3">漢</span><span class="t4">漢</span><span class="t0">漢</span>
+      </div>
+      <div class="toneabove"  style="font-size:5em;">
+	<span class="t1">媽</span><span class="t2">麻</span><span class="t3">馬</span><span class="t4">罵</span><span class="t0">嗎</span>
+      </div>
+
+      <p>One problem with using this for pinyin is you probably don't want the tone mark proportional to the size of the pinyin syllable:</p>
+      <div>
+	<span class="t1">ma</span> <span class="t2">ma</span> <span class="t3">ma</span> <span class="t4">ma</span> <span class="t0">ma</span>
+      </div>
+      <div>
+	<span class="t1">miao</span> <span class="t2">miao</span> <span class="t3">miao</span> <span class="t4">miao</span> <span class="t0">miao</span>
+      </div>
+      <div>
+	<span class="t1">a</span> <span class="t2">a</span> <span class="t3">a</span> <span class="t4">a</span> <span class="t0">a</span>
+      </div>
+
+      <p>Tone marks as SVG images:</p>
+      <p>Tone marks as background:</p>
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='15' x2='85' y2='15' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>">
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='85' x2='85' y2='15' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>">
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><polyline points='15,50 50,85 85,50' style='stroke:red;stroke-width:5;stroke-linecap:round;fill:none'/></svg>">
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='15' x2='85' y2='85' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>">
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><circle cx='50' cy='50' r='1' style='stroke:red;stroke-width:5;stroke-linecap:round;fill:none'/></svg>">
+      </div>
+      <p>Tone marks to put above:</p>
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='130' width='100'><line x1='25' y1='15' x2='75' y2='15' style='stroke:blue;stroke-width:5;stroke-linecap:round'/></svg>">
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='130' width='100'><line x1='25' y1='35' x2='75' y2='15' style='stroke:blue;stroke-width:5;stroke-linecap:round'/></svg>">
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='130' width='100'><polyline points='25,25 50,35 75,25' style='stroke:blue;stroke-width:5;stroke-linecap:round;fill:none'/></svg>">
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='130' width='100'><line x1='25' y1='15' x2='75' y2='35' style='stroke:blue;stroke-width:5;stroke-linecap:round'/></svg>">
+	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='130' width='100'><circle cx='50' cy='25' r='1' style='stroke:blue;stroke-width:5;stroke-linecap:round;fill:none'/></svg>">
+      </div>
+
+      <p>Tone marks from CSS:</p>
+      <p>Tone marks as background:</p>
+      <div>
+	<span class="t1 big">　</span><span class="t2 big">　</span><span class="t3 big">　</span><span class="t4 big">　</span><span class="t0 big">　</span>
+      </div>
+      <p>Tone marks to put above:</p>
+      <div class="toneabove">
+	  <span class="t1 big">　</span><span class="t2 big">　</span><span class="t3 big">　</span><span class="t4 big">　</span><span class="t0 big">　</span><br>
+      </div>
+
+      <p>Note: using HTML's ruby annotations doesn't work well as the tone mark gets selected if you try to copy text:</p>
+      <div>
 	<ruby>
 	  漢 <rt>1</rt>
 	</ruby><ruby>
@@ -62,7 +131,7 @@
 	  漢 <rt>0</rt>
 	</ruby>
       </div>
-      <div class="diatones">
+      <div>
 	<ruby>
 	  漢 <rt> ¯ </rt>
 	</ruby><ruby>
@@ -75,81 +144,7 @@
 	  漢 <rt>·</rt>
 	</ruby>
       </div>
-      <div class="svgtones">
-	<ruby class="t1">
-	  漢 <rt> ¯ </rt>
-	</ruby><ruby class="t2">
-	  漢 <rt> </rt>
-	</ruby><ruby class="t3">
-	  漢 <rt> V </rt>
-	</ruby><ruby class="t4">
-	  漢 <rt>\</rt>
-	</ruby><ruby class="t0">
-	  漢 <rt>·</rt>
-	</ruby>
-      </div>
-      <div class="svgtones" style="font-size:5em;">
-	<ruby class="t1">
-	  漢 <rt> ¯ </rt>
-	</ruby><ruby class="t2">
-	  漢 <rt> </rt>
-	</ruby><ruby class="t3">
-	  漢 <rt> V </rt>
-	</ruby><ruby class="t4">
-	  漢 <rt>\</rt>
-	</ruby><ruby class="t0">
-	  漢 <rt>·</rt>
-	</ruby>
-      </div>
-      <div class="noruby">
-	<span class="t1">漢</span><span class="t2">漢</span><span class="t3">漢</span><span class="t4">漢</span><span class="t0">漢</span>
-      </div>	    
-      <div class="noruby"  style="font-size:0.5em;">
-	<span class="t1">漢</span><span class="t2">漢</span><span class="t3">漢</span><span class="t4">漢</span><span class="t0">漢</span>
-      </div>
-      <div>
-	Tone above:
-      </div>
-      <div class="toneabove">
-	<span class="t1">漢</span><span class="t2">漢</span><span class="t3">漢</span><span class="t4">漢</span><span class="t0">漢</span>
-      </div>	    
-      <div class="toneabove" style="font-size:0.5em;">
-	<span class="t1">漢</span><span class="t2">漢</span><span class="t3">漢</span><span class="t4">漢</span><span class="t0">漢</span>
-      </div>	    
-      <div class="none">
-	漢漢漢漢漢
-      </div>
-      <div class="none">
-      	媽麻馬罵嗎
-      </div>
-      <div class="none">
-	<span class="t1">媽</span><span class="t2">麻</span><span class="t3">馬</span><span class="t4">罵</span><span class="t0">嗎</span>
-      </div>
-      <div class="noruby"  style="font-size:0.5em;">
-	<span class="t1">媽</span><span class="t2">麻</span><span class="t3">馬</span><span class="t4">罵</span><span class="t0">嗎</span>
-      </div>
-      <div class="noruby"  style="font-size:12px;">
-	<span class="t1">媽</span><span class="t2">麻</span><span class="t3">馬</span><span class="t4">罵</span><span class="t0">嗎</span>
-      </div>
-      <div>Superposable tone marks:<br>
-	<span class="t1 big"></span><span class="t2 big"></span><span class="t3 big"></span><span class="t4 big"></span><span class="t0 big"></span>
-      </div>
-      <div class="toneabove">Tone marks to put above:<br>
-	  <span class="t1 big"></span><span class="t2 big"></span><span class="t3 big"></span><span class="t4 big"></span><span class="t0 big"></span><br>
-	</div>
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='15' x2='85' y2='15' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>">
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='85' x2='85' y2='15' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>">
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><polyline points='15,50 50,85 85,50' style='stroke:red;stroke-width:5;stroke-linecap:round;fill:none'/></svg>">
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='15' y1='15' x2='85' y2='85' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>">
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><circle cx='50' cy='50' r='1' style='stroke:red;stroke-width:5;stroke-linecap:round;fill:none'/></svg>">
-      </div>
-      <div>Tone marks to put above:<br>
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='25' y1='15' x2='75' y2='15' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>">
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='25' y1='35' x2='75' y2='15' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>">
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><polyline points='25,25 50,35 75,25' style='stroke:red;stroke-width:5;stroke-linecap:round;fill:none'/></svg>">
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><line x1='25' y1='15' x2='75' y2='35' style='stroke:red;stroke-width:5;stroke-linecap:round'/></svg>">
-	<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' height='100' width='100'><circle cx='50' cy='25' r='1' style='stroke:red;stroke-width:5;stroke-linecap:round;fill:none'/></svg>">
-      </div>
+
       <pre>
 	http://www.hackingchinese.com/adding-tone-marks-wo-pinyin-above-characters-to-practise-tones/
 	https://tex.stackexchange.com/questions/372227/how-to-use-cjk-ruby-for-diacritics-only
@@ -157,5 +152,6 @@
 	https://commons.wikimedia.org/wiki/File:Pinyin_Tone_Chart.svg
 	http://letteringjs.com/
       </pre>
+
     </body>
 </html>
